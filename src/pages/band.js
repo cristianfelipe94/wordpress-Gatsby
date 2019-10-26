@@ -3,16 +3,18 @@ import Navbar from "../components/navbar"
 
 import Layout from "../components/layout"
 import Image from "../components/image"
+import Img from "gatsby-image"
 import SEO from "../components/seo"
 import {useStaticQuery, graphql} from "gatsby"
 
-const IndexPage = () => {
+const BandPage = () => {
   const data = useStaticQuery(graphql`
     query {
-      site {
-        siteMetadata {
-          title
-          description
+      placeholderImage: file(relativePath: { eq: "tool.jpg" }) {
+        childImageSharp {
+          fluid(maxWidth: 300) {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
     }
@@ -21,15 +23,14 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>Hi people</h1>
-      <h2>{data.site.siteMetadata.description}</h2>
+      <h1>Tool</h1>
       <p>Now go build something great.</p>
       <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-        <Image />
+        <Img fluid={data.placeholderImage.childImageSharp.fluid} />
       </div>
       <Navbar/>
     </Layout>
   )
 }
 
-export default IndexPage
+export default BandPage
